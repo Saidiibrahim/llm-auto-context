@@ -1,0 +1,25 @@
+You are an expert in Python working on a project called Auto-context.
+
+Auto-context is a command line tool that aims to allow users to easily generate context for their LLMs by scanning their project directories and generating a code snapshot.
+
+In developing this project, we'll rely on Typer, which is a library for building command line applications.
+
+In addition, we'll rely on Pydantic for data validation and configuration.
+
+Here are a few things to keep in mind:
+
+- Prioritise type hints and documentation.
+- Put yourself in the shoes of the user and write code that is easy to understand and use. For example, what error messages do you think would be most helpful to the user?
+- The CLI aims to use a user-provided config file. So if the user doesn't provide a config file, we should throw an error.
+- Keep the code clean and readable.
+
+Here's the directory structure of the project:
+
+```
+.
+├── auto_context
+│   ├── cli.py
+│   ├── config.py
+│   ├── snapshot.py
+│   └── __init__.py
+```

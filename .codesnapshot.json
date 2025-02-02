@@ -1,0 +1,7 @@
+{
+    "directories": ["auto_context"],
+    "output_file": "code_snapshot.md",
+    "include_extensions": [".py", ".json", ".toml"],
+    "exclude_dirs": ["__pycache__", ".git", "build"],
+    "exclude_files": []
+} 
