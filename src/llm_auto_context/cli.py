@@ -16,9 +16,14 @@ DEFAULT_CONFIG = ".codesnapshot.json"
 
 def load_config(config_path: Path) -> SnapshotConfig:
     """Load config from file or return defaults."""
-    if config_path.exists():
+    if not config_path.exists():
+        raise FileNotFoundError(f"Config file not found: {config_path}")
+    try:
         return SnapshotConfig.model_validate(json.loads(config_path.read_text()))
-    return SnapshotConfig()
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Invalid JSON in config file: {e}")
+    except Exception as e:
+        raise ValueError(f"Invalid config file: {e}")
 
 @app.command()
 def main(
@@ -68,10 +73,22 @@ def main(
 ) -> None:
     """Generate code snapshots with configurable settings."""
     try:
-        cfg = load_config(config)
+        # Load config
+        try:
+            cfg = load_config(config)
+        except FileNotFoundError:
+            if not directories:
+                typer.echo("Error: No config file found and no directories specified", err=True)
+                raise typer.Exit(code=1)
+            cfg = SnapshotConfig()
         
         # Override config with CLI options
         if directories:
+            # Validate directories exist
+            for directory in directories:
+                if not Path(directory).exists():
+                    typer.echo(f"Error: Directory not found: {directory}", err=True)
+                    raise typer.Exit(code=1)
             cfg.directories = list(directories)
         if output:
             cfg.output_file = str(output)
@@ -86,6 +103,8 @@ def main(
         output_path = create_code_snapshot(cfg)
         typer.echo(f"Created snapshot at: {output_path}")
 
+    except typer.Exit:
+        raise
     except Exception as e:
         typer.echo(f"Error: {str(e)}", err=True)
         raise typer.Exit(code=1)

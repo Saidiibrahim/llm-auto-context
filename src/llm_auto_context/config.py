@@ -2,7 +2,7 @@
 
 from pathlib import Path
 from typing import List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 class SnapshotConfig(BaseModel):
     """Configuration model for code snapshot generation."""
@@ -27,6 +27,20 @@ class SnapshotConfig(BaseModel):
         default=[],
         description="Specific files to exclude"
     )
+
+    @field_validator("output_file")
+    def validate_output_file(cls, v: str) -> str:
+        """Validate output file path."""
+        if not v:
+            raise ValueError("Output file path cannot be empty")
+        return v
+
+    @field_validator("directories")
+    def validate_directories(cls, v: List[str]) -> List[str]:
+        """Validate directories list."""
+        if not v:
+            raise ValueError("At least one directory must be specified")
+        return v
 
     def get_output_path(self, base_dir: Optional[Path] = None) -> Path:
         """Get absolute output path, optionally relative to base_dir."""

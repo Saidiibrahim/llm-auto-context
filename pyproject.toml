@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "llm-auto-context"
@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "CLI tool for creating code snapshots with configurable settings"
 readme = "README.md"
 requires-python = ">=3.8"
-license = "MIT"
+license = { text = "MIT" }
 authors = [
     { name = "Ibrahim Saidi" }
 ]
@@ -31,12 +31,40 @@ dependencies = [
     "rich>=13.0.0"  # For better CLI output
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.0.0",
+    "mypy>=1.0.0",
+]
+
 [project.urls]
 Homepage = "https://github.com/yourusername/auto-context"
 Repository = "https://github.com/yourusername/auto-context.git"
 
 [project.scripts]
-codesnapshot = "llm_auto_context.cli:app"
+llm_auto_context = "llm_auto_context.cli:app"
 
-[tool.hatch.build.targets.wheel]
+[tool.setuptools]
+package-dir = {"" = "src"}
 packages = ["llm_auto_context"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --cov=llm_auto_context --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["llm_auto_context"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+]

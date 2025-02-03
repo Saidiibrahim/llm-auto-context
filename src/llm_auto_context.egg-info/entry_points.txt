@@ -1,0 +1,2 @@
+[console_scripts]
+llm_auto_context = llm_auto_context.cli:app

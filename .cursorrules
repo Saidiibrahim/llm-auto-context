@@ -17,9 +17,20 @@ Here's the directory structure of the project:
 
 ```
 .
-├── auto_context
-│   ├── cli.py
-│   ├── config.py
-│   ├── snapshot.py
-│   └── __init__.py
+├── README.md
+├── code_snapshot.md
+├── dist
+│   ├── llm_auto_context-1.0.0-py3-none-any.whl
+│   └── llm_auto_context-1.0.0.tar.gz
+├── llm_auto_context
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-313.pyc
+│   │   ├── cli.cpython-313.pyc
+│   │   ├── config.cpython-313.pyc
+│   │   └── snapshot.cpython-313.pyc
+│   ├── cli.py
+│   ├── config.py
+│   └── snapshot.py
+└── pyproject.toml
 ```

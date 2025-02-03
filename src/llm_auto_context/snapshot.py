@@ -13,13 +13,13 @@ def should_include_file(
 ) -> bool:
     """Check if a file should be included in the snapshot."""
     # Check if file is in exclude list
-    rel_path = file_path.relative_to(base_dir)
-    if str(rel_path) in config.exclude_files:
+    rel_path = str(file_path.relative_to(base_dir))
+    if any(exclude in rel_path for exclude in config.exclude_files):
         return False
 
     # Check if file is in excluded directory
     for exclude_dir in config.exclude_dirs:
-        if exclude_dir in str(rel_path).split(os.sep):
+        if exclude_dir in rel_path.split(os.sep):
             return False
 
     # Check file extension
