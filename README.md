@@ -1,8 +1,8 @@
-# LLM-Auto-Context
+# 🦜 LLM-Auto-Context
 
-A CLI tool for generating code snapshots for LLM context windows.
+A CLI tool for generating code snapshots for AI code assistants such as ChatGPT and Claude.
 
-[![Python Version](https://img.shields.io/badge/python-3.7%2B-blue)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/python-3.13%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ## Installation
